@@ -1,15 +1,6 @@
 #!/bin/bash
 
-################################################################################
-# Script Name : health_check.sh
-# Description : Performs basic Linux health checks
-# Checks:
-#   1. Disk Usage
-#   2. Memory Usage
-#   3. Docker Service Status
-#   4. Logs output to timestamped log file
-#   5. Returns non-zero exit code if disk usage exceeds 80%
-################################################################################
+
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 LOG_FILE="health_check_${TIMESTAMP}.log"
