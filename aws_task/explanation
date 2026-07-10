@@ -111,3 +111,22 @@ These choices reduce infrastructure cost while meeting the assessment requiremen
 
 ---
 
+## Assumptions
+
+- AWS credentials are already configured.
+- An existing EC2 Key Pair is available.
+- Terraform is used for infrastructure provisioning.
+- Docker is installed on the application server during provisioning.
+
+---
+
+## Trade-offs
+
+To keep the solution simple and aligned with the assessment scope:
+
+- Auto Scaling was not implemented.
+- Application Load Balancer was not included.
+- Multi-AZ deployment was not enabled.
+- Kubernetes (Amazon EKS) was not used.
+
+These services can be added in a production environment to improve scalability, availability, and fault tolerance.
