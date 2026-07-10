@@ -199,8 +199,8 @@ The health_check.sh script performs:
 Run:
 
 ```bash
-chmod +x health_check.sh
-./health_check.sh
+chmod +x health_checks.sh
+./health_checks.sh
 ```
 
 ---
