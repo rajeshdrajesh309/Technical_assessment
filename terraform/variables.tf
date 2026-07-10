@@ -31,8 +31,18 @@ variable "private_subnet_cidr" {
   type        = string
 }
 
+variable "private_subnet2_cidr" {
+  description = "Second Private Subnet CIDR"
+  type        = string
+}
+
 variable "availability_zone" {
-  description = "Availability Zone"
+  description = "Primary Availability Zone"
+  type        = string
+}
+
+variable "availability_zone2" {
+  description = "Secondary Availability Zone"
   type        = string
 }
 
