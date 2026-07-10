@@ -1,0 +1,113 @@
+# AWS Architecture Design
+
+## Overview
+
+The solution is designed for a secure, production-aware deployment of a containerized web application on AWS. It follows AWS best practices by separating public and private resources, implementing least-privilege access, and keeping costs low while maintaining security and scalability.
+
+---
+
+## Networking Design
+
+A custom VPC (10.0.0.0/16) is created to isolate the application environment.
+
+The VPC contains:
+
+- One Public Subnet
+- Two Private Subnets
+
+The Public Subnet hosts the Bastion Host, which is the only server accessible from the internet for administrative purposes.
+
+The Private Subnets host:
+
+- Application EC2 Instance
+- Amazon RDS MySQL Database
+
+The Internet Gateway provides internet access only to resources in the public subnet.
+
+Route Tables ensure:
+
+- Public subnet routes internet traffic through the Internet Gateway.
+- Private subnets remain isolated from direct internet access.
+
+This design minimizes the attack surface while allowing secure administration.
+
+---
+
+## Security Design
+
+Security Groups implement least-privilege access.
+
+### Bastion Host
+
+- SSH (Port 22) allowed only from the administrator's public IP.
+
+### Application EC2
+
+- SSH allowed only from the Bastion Host.
+- HTTP (80) and HTTPS (443) allowed for application traffic.
+
+### Amazon RDS
+
+- MySQL (3306) allowed only from the Application EC2 Security Group.
+- No public access.
+
+IAM Roles are attached to EC2 instances instead of storing AWS credentials locally.
+
+---
+
+## Secrets Management
+
+Sensitive values such as database credentials are not hardcoded.
+
+Terraform variables are used for configuration.
+
+For production deployments, AWS Secrets Manager or AWS Systems Manager Parameter Store should be used to securely manage secrets.
+
+---
+
+## Monitoring Strategy
+
+Amazon CloudWatch is used for:
+
+- CPU utilization
+- Memory usage
+- Disk usage
+- Network metrics
+- Log collection
+
+CloudWatch Agent can be installed on EC2 instances to collect operating system metrics and application logs.
+
+---
+
+## CI/CD
+
+The CI/CD pipeline uses:
+
+GitHub → Jenkins → EC2
+
+The pipeline performs:
+
+- Source code checkout
+- Build
+- Testing
+- Docker image creation
+- Deployment to the application server
+
+---
+
+## Cost Optimization
+
+The architecture is designed to be cost-conscious by using:
+
+- t3.micro EC2 instances
+- db.t3.micro Amazon RDS
+- gp3 storage volumes
+- Single Availability Zone deployment
+- No Auto Scaling Group
+- No Application Load Balancer
+- No NAT Gateway
+
+These choices reduce infrastructure cost while meeting the assessment requirements.
+
+---
+
