@@ -40,7 +40,7 @@ resource "aws_subnet" "public" {
 }
 
 ############################################
-# Private Subnet
+# Private Subnet 1
 ############################################
 
 resource "aws_subnet" "private" {
@@ -49,7 +49,21 @@ resource "aws_subnet" "private" {
   availability_zone = var.availability_zone
 
   tags = {
-    Name = "production-private-subnet"
+    Name = "production-private-subnet-1"
+  }
+}
+
+############################################
+# Private Subnet 2
+############################################
+
+resource "aws_subnet" "private2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnet2_cidr
+  availability_zone = var.availability_zone2
+
+  tags = {
+    Name = "production-private-subnet-2"
   }
 }
 
@@ -66,7 +80,7 @@ resource "aws_route_table" "public" {
 }
 
 ############################################
-# Public Internet Route
+# Internet Route
 ############################################
 
 resource "aws_route" "internet_access" {
@@ -76,7 +90,7 @@ resource "aws_route" "internet_access" {
 }
 
 ############################################
-# Associate Public Route Table
+# Public Route Association
 ############################################
 
 resource "aws_route_table_association" "public" {
@@ -97,10 +111,19 @@ resource "aws_route_table" "private" {
 }
 
 ############################################
-# Associate Private Route Table
+# Private Route Association 1
 ############################################
 
 resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private.id
+  route_table_id = aws_route_table.private.id
+}
+
+############################################
+# Private Route Association 2
+############################################
+
+resource "aws_route_table_association" "private2" {
+  subnet_id      = aws_subnet.private2.id
   route_table_id = aws_route_table.private.id
 }
