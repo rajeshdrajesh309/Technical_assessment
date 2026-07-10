@@ -114,6 +114,7 @@ To minimize cost:
 - No NAT Gateway
 - No Multi-AZ deployment
 
+To keep the solution cost-conscious, a NAT Gateway has not been provisioned. In a production environment, a NAT Gateway or appropriate VPC endpoints would be added to allow private instances to download packages and access AWS services.
 ---
 
 ## Terraform Components
