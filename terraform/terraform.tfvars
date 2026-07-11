@@ -27,7 +27,7 @@ instance_type = "t3.micro"
 
 key_name = "production-key"
 
-admin_ip = "PUBLIC_IP/32"
+admin_ip = "10.0.1.20/32"
 
 #############################
 # Database
